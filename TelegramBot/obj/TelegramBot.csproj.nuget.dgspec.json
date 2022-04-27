@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj": {}
+    "C:\\Users\\vlad9\\Desktop\\Diplom\\TelegramBot\\TelegramBot\\TelegramBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj": {
+    "C:\\Users\\vlad9\\Desktop\\Diplom\\TelegramBot\\TelegramBot\\TelegramBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj",
+        "projectUniqueName": "C:\\Users\\vlad9\\Desktop\\Diplom\\TelegramBot\\TelegramBot\\TelegramBot.csproj",
         "projectName": "TelegramBot",
-        "projectPath": "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj",
+        "projectPath": "C:\\Users\\vlad9\\Desktop\\Diplom\\TelegramBot\\TelegramBot\\TelegramBot.csproj",
         "packagesPath": "C:\\Users\\vlad9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\obj\\",
+        "outputPath": "C:\\Users\\vlad9\\Desktop\\Diplom\\TelegramBot\\TelegramBot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vlad9\\AppData\\Roaming\\NuGet\\NuGet.Config",

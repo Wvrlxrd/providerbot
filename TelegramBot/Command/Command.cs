@@ -10,6 +10,7 @@ namespace TelegramBot.Command
 {
     public abstract class Command
     {
+        public abstract string Name { get; set; }
         public abstract string [] Names { get; set; }
 
         public abstract void Execute(Message message, TelegramBotClient client);
@@ -25,5 +26,6 @@ namespace TelegramBot.Command
             }
             return false;
         }
+
     }
 }
