@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj": {}
+    "D:\\Projects\\c#\\consoleApp\\providerbot\\TelegramBot\\TelegramBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj": {
+    "D:\\Projects\\c#\\consoleApp\\providerbot\\TelegramBot\\TelegramBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj",
+        "projectUniqueName": "D:\\Projects\\c#\\consoleApp\\providerbot\\TelegramBot\\TelegramBot.csproj",
         "projectName": "TelegramBot",
-        "projectPath": "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\TelegramBot.csproj",
-        "packagesPath": "C:\\Users\\vlad9\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vlad9\\Desktop\\Диплом\\TelegramBot\\TelegramBot\\TelegramBot\\obj\\",
+        "projectPath": "D:\\Projects\\c#\\consoleApp\\providerbot\\TelegramBot\\TelegramBot.csproj",
+        "packagesPath": "C:\\Users\\Honor MagicBook\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\c#\\consoleApp\\providerbot\\TelegramBot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vlad9\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Honor MagicBook\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +38,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -63,12 +69,30 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.16, 5.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Honor MagicBook\\.dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
