@@ -18,5 +18,10 @@
         {
             return $"{nameof(Id)}: {Id}, {nameof(Title)}: {Title}, {nameof(CategoryTitle)}: {CategoryTitle}";
         }
+        
+        public string prettyPrint()
+        {
+            return $"Название: {Title}, относится к категории: {CategoryTitle}";
+        }
     }
 }

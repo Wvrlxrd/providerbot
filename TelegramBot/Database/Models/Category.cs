@@ -18,6 +18,11 @@ namespace TelegramBot.Database.Models
         {
             return $"{nameof(Id)}: {Id}, {nameof(Title)}: {Title}";
         }
+
+        public string prettyPrint()
+        {
+            return $"Название: {Title}";
+        }
     }
     
 }

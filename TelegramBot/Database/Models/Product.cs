@@ -21,5 +21,10 @@
         {
             return $"{nameof(Id)}: {Id}, {nameof(Title)}: {Title}, {nameof(Price)}: {Price}, {nameof(Description)}: {Description}, {nameof(Service)}: {ServiceTitle}";
         }
+        
+        public string prettyPrint()
+        {
+            return $"Название: {Title}, Цена: {Price}, Описание: {Description}, относится к услуге: {ServiceTitle}";
+        }
     }
 }
