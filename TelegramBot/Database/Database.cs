@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using Dapper;
 using Microsoft.Data.Sqlite;
+using TelegramBot.Command.Commands;
 using TelegramBot.Database.Models;
 
 namespace TelegramBot.Database
@@ -77,6 +78,53 @@ namespace TelegramBot.Database
                 }
             }
             return list;
+        }
+
+        public static bool AddProduct(string title, long price, string description, long serviceId)
+        {
+            using var connection = new SqliteConnection(DataSource);
+            connection.Open();
+            SqliteCommand insertSql = new SqliteCommand($"INSERT INTO Product(Title, Price, Description, Service) VALUES(\"{title}\", {price}, \"{description}\", {serviceId})", connection);
+            try
+            {
+                insertSql.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void RemoveProduct(long index)
+        {
+            using var connection = new SqliteConnection(DataSource);
+            connection.Open();
+            SqliteCommand insertSql = new SqliteCommand($"DELETE FROM Product WHERE id = \"{index}\"", connection);
+            try
+            {
+                insertSql.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void UpdateProduct(long id, string title, long price, string description)
+        {
+            using var connection = new SqliteConnection(DataSource);
+            connection.Open();
+            SqliteCommand insertSql = new SqliteCommand($"UPDATE Product SET title=\"{title}\", price=\"{price}\", description=\"{description}\" WHERE id={id}", connection);
+            try
+            {
+                insertSql.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

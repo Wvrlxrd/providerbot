@@ -15,7 +15,11 @@ namespace TelegramBot.Command.Commands
 
         public override async void Execute(Message message, TelegramBotClient client)
         {
-            await client.SendTextMessageAsync(message.Chat, "Хелпа"); 
+            await client.SendTextMessageAsync(message.Chat, "Ознакомиться с асортиментом товаров - /products\n" +
+                                                            "Ознакомиться с категориями - /category\n" +
+                                                            "Ознакомиться с услугами - /service\n" +
+                                                            "Найти желаемый товар - /search\n" +
+                                                            "Найти по цене - /price");
         }
     }
 }
