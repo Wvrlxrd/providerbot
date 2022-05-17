@@ -9,7 +9,7 @@ namespace TelegramBot.Command.Commands
         public override string[] Names { get; set; } = { "/problem" };
         public override void Execute(Message message, TelegramBotClient client)
         {
-            throw new System.NotImplementedException();
+            client.SendTextMessageAsync(message.Chat, "По проблемам обращаться к @Warlord или 89042119556");
         }
     }
 }

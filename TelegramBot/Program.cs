@@ -57,6 +57,7 @@ namespace TelegramBot
             commands.Add(new AddProductCommand());    // Инициализация комманд 
             commands.Add(new RemoveProductCommand());    // Инициализация комманд 
             commands.Add(new UpdateProductCommand());    // Инициализация комманд 
+            commands.Add(new ProblemCommand());    // Инициализация комманд 
             _modeDict.Add("/search", modeSearch);
             _modeDict.Add("/price", modePrice);
             _modeDict.Add("/addProduct", modeAddProduct);
