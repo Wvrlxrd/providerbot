@@ -23,6 +23,7 @@ namespace TelegramBot
         private static int step = 0;
         private static bool modePrice = false;
         private static bool modeAddProduct = false;
+        private static bool modeProductCategory = false;
         private static string currentService = "";
         private static string helloString = "Здравствуйте! Я ваш электронный консультант. В нашем боте вы можете:\n" +
                                             "Ознакомиться с асортиментом товаров - /products\n" +
@@ -58,11 +59,13 @@ namespace TelegramBot
             commands.Add(new RemoveProductCommand());    // Инициализация комманд 
             commands.Add(new UpdateProductCommand());    // Инициализация комманд 
             commands.Add(new ProblemCommand());    // Инициализация комманд 
+            commands.Add(new GetProductByCategoryCommand());    // Инициализация комманд 
             _modeDict.Add("/search", modeSearch);
             _modeDict.Add("/price", modePrice);
             _modeDict.Add("/addProduct", modeAddProduct);
             _modeDict.Add("/removeProduct", modeRemoveProduct);
             _modeDict.Add("/updateProduct", modeUpdateProduct);
+            _modeDict.Add("/getProductCategory", modeProductCategory);
             botClient.StartReceiving(        // Подписка на события
                 HandleUpdateAsync,
                 HandleErrorAsync,
@@ -143,6 +146,10 @@ namespace TelegramBot
             if (_modeDict["/removeProduct"])
             {
                 UpdateProduct(message, (TelegramBotClient) botClient);
+            }
+            if (_modeDict["/getProductCategory"])
+            {
+                GetProductsByCategory(message, (TelegramBotClient) botClient);
             }
             if (!toMatch)
             {
@@ -446,6 +453,40 @@ namespace TelegramBot
                     break;
                 }
             }
+        }
+
+        private static async void GetProductsByCategory(Message message, TelegramBotClient client)
+        {
+            int choice = 0;
+            switch (step)
+            {
+                case 0:
+                {
+                    new CategoryCommand().Execute(message, (TelegramBotClient)botClient);
+                    await client.SendTextMessageAsync(message.Chat, "Выберите позицию");
+                    step += 1;
+                    break;
+                }
+                case 1:
+                {
+                    choice = int.Parse(message.Text);
+                    new ProductCommand().Execute(message, (TelegramBotClient)botClient);
+                    step += 1;
+                    break;
+                }
+                case 2:
+                {
+                    choice = int.Parse(message.Text);
+                    var products1 = Database.Database.GetProductByCategory(Database.Database.GetCategory()[choice].Id);
+                    foreach (var product in products1)
+                    {
+                        await client.SendTextMessageAsync(message.Chat, product.prettyPrint());
+                    }
+                    _modeDict["/getProductCategory"] = false;
+                    step = 0;
+                    break;
+                }
+            }   
         }
     }
     

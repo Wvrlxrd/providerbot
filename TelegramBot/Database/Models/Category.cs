@@ -5,8 +5,8 @@ namespace TelegramBot.Database.Models
 {
     public class Category
     {
-        private long Id { get; }
-        private string Title { get; }
+        public long Id { get; }
+        public string Title { get; }
 
         public Category(long id, string title)
         {
