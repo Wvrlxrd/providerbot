@@ -12,11 +12,10 @@ namespace TelegramBot.Command.Commands
         public override async void Execute(Message message, TelegramBotClient client)
         {
             var products = Database.Database.GetProduct();
-            foreach (var product in products)
+            for (int i = 0; i < products.Count; i++)
             {
-                await client.SendTextMessageAsync(message.Chat, product.prettyPrint());
+                await client.SendTextMessageAsync(message.Chat, (i+1) + ". " + products[i].prettyPrint());
             }
-
         }
     }
 }

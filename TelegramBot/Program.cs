@@ -143,7 +143,7 @@ namespace TelegramBot
             {
                 RemoveProduct(message, (TelegramBotClient) botClient);
             }
-            if (_modeDict["/removeProduct"])
+            if (_modeDict["/updateProduct"])
             {
                 UpdateProduct(message, (TelegramBotClient) botClient);
             }
@@ -224,9 +224,11 @@ namespace TelegramBot
                 }
                 case 1:
                 {
+                    
                     foreach (var service in services)
                     {
-                        if (service.Title.ToLower().Contains(message.Text))
+                        Console.WriteLine(service.Title.ToLower().Contains(message.Text));
+                        if (service.Title.ToLower().Contains(message.Text.ToLower()))
                         {
                             currentService = service.Title;
                             await client.SendTextMessageAsync(message.Chat, "Вы выбрали " + currentService.ToLower());
@@ -239,7 +241,10 @@ namespace TelegramBot
                     if (isNotFound)
                     {
                         _modeDict["/price"] = false;
+                        currentService = "";
                         await client.SendTextMessageAsync(message.Chat, "Цены не найдены");
+                        step = 0;
+                        return;
                     }
                     break;
                 }
@@ -250,12 +255,16 @@ namespace TelegramBot
                     long[] array = new long[products.Count];
                     for (int i = 0; i < products.Count; i++)
                     {
-                        array[i] = budget - products[i].Price;
+                        if (products[i].ServiceTitle == currentService)
+                        {
+                            array[i] = products[i].Price - budget;    
+                        }
                     }
-                    Console.WriteLine(array);
-                    int index = Array.IndexOf(array, array.Max());
+                    
+                    int index = Array.IndexOf(array, array.Min());
                     await client.SendTextMessageAsync(message.Chat, $"Вам подходит: {products[index].prettyPrint()}");
                     _modeDict["/price"] = false;
+                    currentService = "";
                     step = 0;
                     break;
                 }
@@ -379,14 +388,14 @@ namespace TelegramBot
                 }
             }
         }
-
+        static int choice = 0;
+        static long id = 0;
+        static string title = "";
+        static string description = "";
+        static long price = 0;
         private static async void UpdateProduct(Message message, TelegramBotClient client)
         {
-            int choice = 0;
-            long id = 0;
-            string title = "";
-            string description = "";
-            long price = 0;
+            
             switch (step)
             {
                 case 0:
@@ -404,49 +413,47 @@ namespace TelegramBot
                         step = 0;
                         return;
                     }
-
                     await client.SendTextMessageAsync(message.Chat, "Выберите позицию");
-                    new ProductCommand().Execute(message, (TelegramBotClient) botClient);
+                    new ProductCommand().Execute(message, (TelegramBotClient)botClient);
                     step += 1;
                     break;
                 }
                 case 2:
                 {
                     choice = int.Parse(message.Text);
-                    var product = Database.Database.GetProduct()[choice];
+                    var product = Database.Database.GetProduct()[choice - 1];
                     id = product.Id;
                     title = product.Title;
                     price = product.Price;
                     description = product.Description;
-                    await client.SendTextMessageAsync(message.Chat, "Выберите поле которое вы хотите изменить\n1.Название\n2.Цена\n3.Описание\n4.Сервис");
-
                     
+                    await client.SendTextMessageAsync(message.Chat, "Выберите новое имя продукта. Если не хотите введите 0");
+                    step += 1;
                     break;
                 }
                 case 3:
                 {
-                    switch (choice)
-                    {
-                        case 1:
-                        {
-                            title = message.Text; 
-                            break;
-                        }
-                        case 2:
-                        {
-                            price = long.Parse(message.Text);
-                            break;
-                        }
-                        case 3:
-                        {
-                            description = message.Text;
-                            break;
-                        }
-                        case 4:
-                        {
-                            break;
-                        }
-                    }
+                    if (message.Text == "0")
+                        step += 1;
+                    else title = message.Text;
+                    step += 1;
+                    await client.SendTextMessageAsync(message.Chat, "Выберите новое описание продукта. Если не хотите введите 0");
+                    break;
+                }
+                case 4:
+                {
+                    await client.SendTextMessageAsync(message.Chat, "Выберите новую цену продукта. Если не хотите введите 0");
+                    if (message.Text == "0")
+                        step += 1;
+                    else description = message.Text;
+                    step += 1;
+                    break;
+                }
+                case 5:
+                {
+                    price = long.Parse(message.Text);
+                    await client.SendTextMessageAsync(message.Chat, "Продукт успешно обновлен");
+                    // Добавить обновление сервиса
                     Database.Database.UpdateProduct(id, title, price, description);
                     _modeDict["/updateProduct"] = false;
                     step = 0;
@@ -456,39 +463,39 @@ namespace TelegramBot
         }
 
         private static async void GetProductsByCategory(Message message, TelegramBotClient client)
-        {
-            int choice = 0;
-            switch (step)
             {
-                case 0:
+                int choice = 0;
+                switch (step)
                 {
-                    new CategoryCommand().Execute(message, (TelegramBotClient)botClient);
-                    await client.SendTextMessageAsync(message.Chat, "Выберите позицию");
-                    step += 1;
-                    break;
-                }
-                case 1:
-                {
-                    choice = int.Parse(message.Text);
-                    new ProductCommand().Execute(message, (TelegramBotClient)botClient);
-                    step += 1;
-                    break;
-                }
-                case 2:
-                {
-                    choice = int.Parse(message.Text);
-                    var products1 = Database.Database.GetProductByCategory(Database.Database.GetCategory()[choice].Id);
-                    foreach (var product in products1)
+                    case 0:
                     {
-                        await client.SendTextMessageAsync(message.Chat, product.prettyPrint());
+                        new CategoryCommand().Execute(message, (TelegramBotClient)botClient);
+                        await client.SendTextMessageAsync(message.Chat, "Выберите позицию");
+                        step += 1;
+                        break;
                     }
-                    _modeDict["/getProductCategory"] = false;
-                    step = 0;
-                    break;
-                }
-            }   
+                    case 1:
+                    {
+                        choice = int.Parse(message.Text);
+                        new ProductCommand().Execute(message, (TelegramBotClient)botClient);
+                        step += 1;
+                        break;
+                    }
+                    case 2:
+                    {
+                        choice = int.Parse(message.Text);
+                        var products1 = Database.Database.GetProductByCategory(Database.Database.GetCategory()[choice].Id);
+                        foreach (var product in products1)
+                        {
+                            await client.SendTextMessageAsync(message.Chat, product.prettyPrint());
+                        }
+                        _modeDict["/getProductCategory"] = false;
+                        step = 0;
+                        break;
+                    }
+                }   
+            }
         }
+    
+    
     }
-    
-    
-}
