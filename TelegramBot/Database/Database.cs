@@ -133,26 +133,23 @@ namespace TelegramBot.Database
             var categories = GetCategory();
             var services = GetService();
             var products = GetProduct();
+            
             for (int i = 0; i < categories.Count; i++)
             {
                 for (int j = 0; j < services.Count; j++)
                 {
                     for (int k = 0; k < products.Count; k++)
                     {
-                        if (categories[i].Id == categoryId)
+                        if (categories[i].Title == services[j].CategoryTitle && categories[i].Id == categoryId)
                         {
-                            if (services[j].Title == categories[i].Title)
+                            if (services[j].Title == products[k].ServiceTitle)
                             {
-                                if (services[j].Title == products[k].ServiceTitle)
-                                {
-                                    result.Add(products[k]);
-                                }
+                                result.Add(products[k]);
                             }
                         }
                     }
                 }
             }
-
             return result;
         }
     }

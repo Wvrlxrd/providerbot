@@ -463,39 +463,36 @@ namespace TelegramBot
         }
 
         private static async void GetProductsByCategory(Message message, TelegramBotClient client)
+        {
+            int choice = 0;
+            var category =  Database.Database.GetCategory();
+            switch (step)
             {
-                int choice = 0;
-                switch (step)
+                case 0:
                 {
-                    case 0:
+                    for (int i = 0; i < category.Count; i++)
                     {
-                        new CategoryCommand().Execute(message, (TelegramBotClient)botClient);
-                        await client.SendTextMessageAsync(message.Chat, "Выберите позицию");
-                        step += 1;
-                        break;
+                        await client.SendTextMessageAsync(message.Chat, $"{i+1} {category[i].prettyPrint()}");
                     }
-                    case 1:
+                    step += 1;
+                    break;
+                }
+                case 1:
+                {
+                    choice = int.Parse(message.Text);
+                    var matchProducts = Database.Database.GetProductByCategory(category[choice - 1].Id);
+                    foreach (var prod in matchProducts)
                     {
-                        choice = int.Parse(message.Text);
-                        new ProductCommand().Execute(message, (TelegramBotClient)botClient);
-                        step += 1;
-                        break;
+                        await client.SendTextMessageAsync(message.Chat, prod.prettyPrint());
                     }
-                    case 2:
-                    {
-                        choice = int.Parse(message.Text);
-                        var products1 = Database.Database.GetProductByCategory(Database.Database.GetCategory()[choice].Id);
-                        foreach (var product in products1)
-                        {
-                            await client.SendTextMessageAsync(message.Chat, product.prettyPrint());
-                        }
-                        _modeDict["/getProductCategory"] = false;
-                        step = 0;
-                        break;
-                    }
-                }   
+                    _modeDict["/getProductCategory"] = false;
+                    step = 0;
+                    break;
+                }
             }
+
         }
-    
-    
     }
+    
+    
+}
